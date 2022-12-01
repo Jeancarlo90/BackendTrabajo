@@ -108,6 +108,105 @@ const Components = sequelize.define("components", {
     freezeTableName : true
 })
 
+const Request = sequelize.define("request", {
+    id : {
+        primaryKey : true,
+        type : DataTypes.UUID,
+        defaultValue : Sequelize.UUIDV4
+    },
+    email : {
+        type : DataTypes.TEXT,
+        allowNull : false
+    },
+    name : {
+        type : DataTypes.TEXT,
+        allowNull : false
+    },
+    phone : {
+        type : DataTypes.TEXT,
+        allowNull : false
+    },
+    subject : {
+        type : DataTypes.TEXT,
+        allowNull : false
+    },
+    description : {
+        type : DataTypes.TEXT,
+        allowNull : false
+    },
+    user_id : {
+        type : DataTypes.UUID,
+        allowNull : false
+    }
+}, {
+    timestamps : false,
+    freezeTableName : true
+})
+
+const Users = sequelize.define("users", {
+    id : {
+        primaryKey : true,
+        type : DataTypes.UUID,
+        defaultValue : Sequelize.UUIDV4
+    },
+    full_name : {
+        type : DataTypes.TEXT,
+        allowNull : false
+    }
+}, {
+    timestamps : false,
+    freezeTableName : true
+})
+
+const History = sequelize.define("history", {
+    id : {
+        primaryKey : true,
+        type : DataTypes.UUID,
+        defaultValue : Sequelize.UUIDV4
+    },
+    user_id : {
+        type : DataTypes.UUID,
+        allowNull : false
+    },
+    component_id : {
+        type : DataTypes.TEXT,
+        allowNull : false
+    },
+    purchase_date : {
+        type : DataTypes.DATE,
+        allowNull : false
+    }
+}, {
+    timestamps : false,
+    freezeTableName : true
+})
+
+Users.belongsToMany(Components, {
+    through: "history",
+    as: "users",
+    foreignKey: "user_id",
+  });
+  
+  Components.belongsToMany(Users, {
+    through: "tutorial_tag",
+    as: "components",
+    foreignKey: "component_id",
+  });
+
+// Users.hasMany(History);
+// History.belongsTo(Users);
+
+
+// History.belongsTo(Components, {
+//     foreignKey : "component_id"
+// })
+// Components.hasMany(History, {
+//     foreignKey : "id"
+// })
+
+
+
+
 module.exports = {
-    Reviews, Influencers, Components
+    Reviews, Influencers, Components, History, Users,Request
 }
