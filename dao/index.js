@@ -181,31 +181,8 @@ const History = sequelize.define("history", {
     freezeTableName : true
 })
 
-Users.belongsToMany(Components, {
-    through: "history",
-    as: "users",
-    foreignKey: "user_id",
-  });
-  
-  Components.belongsToMany(Users, {
-    through: "tutorial_tag",
-    as: "components",
-    foreignKey: "component_id",
-  });
-
-// Users.hasMany(History);
-// History.belongsTo(Users);
-
-
-// History.belongsTo(Components, {
-//     foreignKey : "component_id"
-// })
-// Components.hasMany(History, {
-//     foreignKey : "id"
-// })
-
-
-
+Users.belongsToMany(Components,{through:"history",foreignKey: "user_id"})
+Components.belongsToMany(Users,{through:"history",foreignKey: "component_id"})
 
 module.exports = {
     Reviews, Influencers, Components, History, Users,Request

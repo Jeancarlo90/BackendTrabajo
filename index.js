@@ -50,25 +50,16 @@ app.get("/components", async (req, resp) => {
 
 ///history?user_id=6c3ea494-7944-4e2c-a067-b56f2372efd1
 //Historia 14
-// app.get("/history", async (req, resp) => {
-//     const iduserReq = req.query.user_id
+app.get("/history", async (req, resp) => {
+    const iduserReq = req.query.user_id
 
-//     console.log(iduserReq);
-
-//     const listaHistory =  await Users.findByPk(iduserReq, {
-//         include: [
-//           {
-//             model: Components,
-//             as: "components",
-//             attributes: ["id", "img"],
-//           },
-//         ],
-//       })
-//     resp.send(listaHistory)
-// })
+    const listaHistory =  await Users.findByPk(iduserReq,{
+        include: [ Components],
+      })
+    resp.send(listaHistory)
+})
 
 //Historia 19
-
 app.post("/request", async (req, resp) => {
     const dataRequest = req.body
     console.log(dataRequest);
